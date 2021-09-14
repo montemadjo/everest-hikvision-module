@@ -12,6 +12,8 @@ class Camera:
     def postOutputRequest(self, state) -> None:
         if state is 1:
             response = requests.put(self.url, data=self.raw_high_request, auth=HTTPDigestAuth(self.username, self.password))
+            print(response)
         elif state is 0:
             response = requests.put(self.url, data=self.raw_low_request, auth=HTTPDigestAuth(self.username, self.password))
+            print(response)
 
