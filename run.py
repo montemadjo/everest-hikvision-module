@@ -14,18 +14,22 @@ URL = config['Remote']['URL']
 username = config['Basic']['Username']
 password = config['Basic']['Password']
 connection_string = config['Iot']['ConnectionString']
+interval = int(config['Iot']['Interval'])
 
-def create_client(connection_string):
+def create_client(connection_string, camera):
     # Create an IoT Hub client
-    client = IoTHubDeviceClient.create_from_connection_string(CONNECTION_STRING)
+    client = IoTHubDeviceClient.create_from_connection_string(connection_string)
 
     # Define a method request handler
     def method_request_handler(method_request):
-        if method_request.name == "SetTelemetryInterval":
+        if method_request.name == "PulseOpenRelay":
             try:
-                global INTERVAL
+                # global INTERVAL
                 print("idemo levo")
-                INTERVAL = int(method_request.payload)
+                # INTERVAL = int(method_request.payload)
+                camera.postOutputRequest(1)
+                time.sleep(1)
+                camera.postOutputRequest(0)
             except ValueError:
                 response_payload = {"Response": "Invalid parameter"}
                 response_status = 400
@@ -55,33 +59,33 @@ def run_telemetry_sample(client):
 
     client.connect()
 
+    print("Wait for message")
     while True:
         # Build the message with simulated telemetry values.
-        temperature = TEMPERATURE + (random.random() * 15)
-        humidity = HUMIDITY + (random.random() * 20)
-        msg_txt_formatted = MSG_TXT.format(temperature=temperature, humidity=humidity)
-        message = Message(msg_txt_formatted)
+        # temperature = TEMPERATURE + (random.random() * 15)
+        # humidity = HUMIDITY + (random.random() * 20)
+        # msg_txt_formatted = MSG_TXT.format(temperature=temperature, humidity=humidity)
+        # message = Message(msg_txt_formatted)
 
         # Add a custom application property to the message.
         # An IoT hub can filter on these properties without access to the message body.
-        if temperature > 30:
-            message.custom_properties["temperatureAlert"] = "true"
-        else:
-            message.custom_properties["temperatureAlert"] = "false"
+        # if temperature > 30:
+        #     message.custom_properties["temperatureAlert"] = "true"
+        # else:
+        #     message.custom_properties["temperatureAlert"] = "false"
 
         # Send the message.
-        print("Sending message: {}".format(message))
-        client.send_message(message)
-        print("Message sent")
-        time.sleep(INTERVAL)
+        # print("Sending message: {}".format(message))
+        # client.send_message(message)
+        time.sleep(interval)
 
-def main(connection_string):
+def main(connection_string, camera):
     print ("IoT Hub Quickstart #2 - Simulated device")
     print ("Press Ctrl-C to exit")
 
     # Instantiate the client. Use the same instance of the client for the duration of
     # your application
-    client = create_client(connection_string)
+    client = create_client(connection_string, camera)
 
     # Send telemetry
     try:
@@ -94,7 +98,4 @@ def main(connection_string):
 
 if __name__ == '__main__':
     camera = Camera(URL, username, password)
-    main(connection_string)
-    camera.postOutputRequest(1)
-    time.sleep(1)
-    camera.postOutputRequest(0)
+    main(connection_string, camera)
