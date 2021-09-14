@@ -1,7 +1,20 @@
-import requests
-from requests.auth import HTTPDigestAuth
-url = 'http://192.168.1.33/ISAPI/System/IO/outputs/1/trigger'
-# url = 'http://192.168.1.33/ISAPI/System/IO/capabilities'
-raw = '<IOPortData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema"><outputState>low</outputState></IOPortData>'
-response = requests.put(url, data=raw, auth=HTTPDigestAuth('admin', 'Admin123'))
-print(response.status_code)
+from queue import Queue
+from threading import Thread
+from hikvision_camera import Camera
+import configparser
+import time
+
+# load configuration file
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+# read the configuration
+URL = config['Remote']['URL']
+username = config['Basic']['Username']
+password = config['Basic']['Password']
+
+if __name__ == '__main__':
+    camera = Camera(URL, username, password)
+    camera.postOutputRequest(1)
+    time.sleep(1)
+    camera.postOutputRequest(0)
