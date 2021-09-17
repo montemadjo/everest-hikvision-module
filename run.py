@@ -3,11 +3,14 @@ from threading import Thread
 from hikvision_camera import Camera
 import configparser
 import time
+import os
 from azure.iot.device import IoTHubDeviceClient, Message, MethodResponse
 
 # load configuration file
 config = configparser.ConfigParser()
-config.read('config.ini')
+path = os.path.join(os.path.dirname(__file__), 'config.ini')
+print (path)
+config.read(path)
 
 # read the configuration
 URL = config['Remote']['URL']
