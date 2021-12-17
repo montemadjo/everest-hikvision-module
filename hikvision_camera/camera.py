@@ -5,7 +5,9 @@ from requests.models import Response
 
 class Camera:
     def __init__(self, URL, username, password) -> None:
-        self.url = URL
+        self.url_trigger = 'http://' + URL + '/ISAPI/System/IO/outputs/1/trigger'
+        self.url_anpr_register = 'http://' + URL + ''
+        self.url_anpr_get_cap = 'http://' + URL + '/ISAPI/Event/notification/httpHosts/capabilities'
         self.username = username
         self.password = password
         self.raw_high_request = '<IOPortData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema"><outputState>high</outputState></IOPortData>'
@@ -31,15 +33,20 @@ class Camera:
 
     def postOutputRequest(self, state) -> None:
         if state is 1:
-            response = requests.put(self.url, data=self.raw_high_request, auth=HTTPDigestAuth(self.username, self.password))
+            response = requests.put(self.url_trigger, data=self.raw_high_request, auth=HTTPDigestAuth(self.username, self.password))
             print(response)
         elif state is 0:
-            response = requests.put(self.url, data=self.raw_low_request, auth=HTTPDigestAuth(self.username, self.password))
+            response = requests.put(self.url_trigger, data=self.raw_low_request, auth=HTTPDigestAuth(self.username, self.password))
             print(response)
 
     def subscribeToAnpr(self, ip_address, port):
         print(ip_address)
         print(port)
-        response = requests.put(self.url, data=self.raw_http_hosts_request,
+        response = requests.put(self.url_trigger, data=self.raw_http_hosts_request,
                                 auth=HTTPDigestAuth(self.username, self.password))
+        return response
+
+    def getHttpHostsCapabilities(self):
+        response = requests.get(self.url_anpr_get_cap, auth=HTTPDigestAuth(self.username, self.password))
+
         return response
