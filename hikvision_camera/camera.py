@@ -19,7 +19,7 @@ class Camera:
                 <protocolType>HTTP</protocolType>
                 <parameterFormatType>XML</parameterFormatType>
                 <addressingFormatType>ipaddress</addressingFormatType>
-                <ipAddress>192.168.1.120</ipAddress>
+                <ipAddress>192.168.1.72</ipAddress>
                 <portNo>8080</portNo>
                 <userName></userName>
                 <httpAuthenticationMethod>none</httpAuthenticationMethod>
