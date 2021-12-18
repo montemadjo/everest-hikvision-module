@@ -40,24 +40,17 @@ SENDER_URL = config['Remote']['SenderUrl']
 
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
+plates = []
+
+
+def arrange(old_plates, new_plates):
+    print(new_plates)
+
 
 if __name__ == '__main__':
-    # camera = Camera('192.168.1.152', 'admin', 'Tfs123456')
-
-    # r = camera.getAnprPlates()
-
-    # xml = r.content.decode("utf-8")
-
-    # # print(xml)
-
-    #
-
-    # o = xmltodict.parse(xml)
-    # f = json.dumps(o) # '{"e": {"a": ["text", "text"]}}'
-    # print(f)
-
     camera = Camera(
         CAMERA_ADDRESS, CAMERA_USERNAME, CAMERA_PASSWORD)
+
     uhfsender = Sender(
         SENDER_URL)
 
@@ -69,4 +62,15 @@ if __name__ == '__main__':
     print(j)
 
     # svakih x sekundi treba da se iščitaju podaci sa kamere,
+    # da se poslože
     # i da se aploaduju na cloud
+    while True:
+        time.sleep(INTERVAL)
+
+        # iščitavanje
+        r = camera.getAnprPlates()
+        xml = r.content.decode("utf-8")
+        o = xmltodict.parse(xml)
+
+        # slaganje
+        arrange(plates, o)
