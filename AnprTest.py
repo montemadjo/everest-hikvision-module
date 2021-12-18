@@ -81,8 +81,8 @@ if __name__ == '__main__':
             "plates" : d
         }
 
-        anprSender.postStadionUhfCards(message)
-        print("data sent!")
+        res = anprSender.postStadionUhfCards(message)
+        print(res.content)
 
         # spavanje
         time.sleep(INTERVAL)
