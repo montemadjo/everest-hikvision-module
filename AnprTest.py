@@ -52,23 +52,35 @@ if __name__ == '__main__':
     anprSender = Sender(
         SENDER_URL)
 
-    r = camera.getAnprPlates()
-    xml = r.content.decode("utf-8")
-    o = xmltodict.parse(xml)
-    j = json.dumps(o)
+    # r = camera.getAnprPlates()
+    # xml = r.content.decode("utf-8")
+    # o = xmltodict.parse(xml)
+    # j = json.dumps(o)
 
-    print(j)
+    # print(j)
 
     # svakih x sekundi treba da se iščitaju podaci sa kamere,
     # ne trebaju da se poslože
     # i da se aploaduju na cloud
     while True:
-        time.sleep(INTERVAL)
-
         # iščitavanje
         r = camera.getAnprPlates()
         xml = r.content.decode("utf-8")
         o = xmltodict.parse(xml)
+        # j = json.dumps(o)
 
         # slanje
-        anprSender.postStadionUhfCards(o)
+        message = {
+            "camera": {
+                "id": MY_ID,
+                "password": 41,
+                "command": "anpr read"
+            },
+            "cards": o
+        }
+        anprSender.postStadionUhfCards(message)
+        print("data sent!")
+
+        # spavanje
+        time.sleep(INTERVAL)
+
