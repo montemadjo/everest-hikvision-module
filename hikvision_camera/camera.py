@@ -69,20 +69,6 @@ class Camera:
             </metadataList>
         </CMSearchDescription>
         """
-        self.xxy = """
-        <?xml version: '1.0' encoding='utf-8'?>
-        <CMSearchDescription>
-            <searchID>202112181158361310</searchID><trackIDList><trackID>103</trackID></trackIDList>
-            <timeSpanList><timeSpan><startTime>2020-06-22T02:25:13Z</startTime><endTime>2022-06-22T02:25:13Z</endTime></timeSpan></timeSpanList>
-            <contentTypeList><contentType>metadata</contentType></contentTypeList>
-            <maxResults>100</maxResults><searchResultPostion>0</searchResultPostion>
-            <metadataList>
-                <metadataDescriptor>//recordType.meta.std-cgi.com/vehicleDetection</metadataDescriptor>
-                <SearchProperity><plateSearchMask/><nation>255</nation></SearchProperity>
-            </metadataList>
-        </CMSearchDescription>
-        """
-
     def postOutputRequest(self, state) -> None:
         if state is 1:
             response = requests.put(self.url_trigger, data=self.raw_high_request, auth=HTTPDigestAuth(self.username, self.password))
