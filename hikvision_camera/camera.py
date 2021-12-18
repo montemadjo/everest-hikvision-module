@@ -8,6 +8,7 @@ class Camera:
         self.url_trigger = 'http://' + URL + '/ISAPI/System/IO/outputs/1/trigger'
         self.url_anpr_register = 'http://' + URL + ''
         self.url_anpr_get_cap = 'http://' + URL + '/ISAPI/Event/notification/httpHosts/capabilities'
+        self.url_anpr_get_plates = 'http://' + URL + '/ISAPI/Traffic/channels/1/vehicleDetect/plates'
         self.username = username
         self.password = password
         self.raw_high_request = '<IOPortData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema"><outputState>high</outputState></IOPortData>'
@@ -48,5 +49,10 @@ class Camera:
 
     def getHttpHostsCapabilities(self):
         response = requests.get(self.url_anpr_get_cap, auth=HTTPDigestAuth(self.username, self.password))
+
+        return response
+
+    def getAnprPlates(self):
+        response = requests.get(self.url_anpr_get_plates, auth=HTTPDigestAuth(self.username, self.password))
 
         return response

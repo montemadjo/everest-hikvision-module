@@ -6,3 +6,7 @@ if __name__ == '__main__':
     r = camera.getHttpHostsCapabilities()
 
     print(r.content.decode("utf-8"))
+
+    r = camera.getAnprPlates()
+
+    print(r.content.decode("utf-8"))
