@@ -76,7 +76,7 @@ if __name__ == '__main__':
                 "password": 41,
                 "command": "anpr read"
             },
-            "cards": o
+            "plates": o
         }
         anprSender.postStadionUhfCards(message)
         print("data sent!")
