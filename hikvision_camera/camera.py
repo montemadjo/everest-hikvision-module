@@ -4,13 +4,16 @@ from requests.auth import HTTPDigestAuth
 from requests.models import Response
 
 class Camera:
-    def __init__(self, URL, username, password) -> None:
-        self.url_trigger = 'http://' + URL + '/ISAPI/System/IO/outputs/1/trigger'
-        self.url_anpr_register = 'http://' + URL + ''
-        self.xxx = 'http://admin:Tfs123456@192.168.1.152/ISAPI/Traffic/channels/1/vehicleDetect/plates'
-        self.url_anpr_get_cap = 'http://' + URL + '/ISAPI/Event/notification/httpHosts/capabilities'
-        self.url_anpr_get_plates = 'http://' + URL + '/ISAPI/Traffic/channels/1/vehicleDetect/plates'
-        self.url_anpr_get_picture = 'http://' + URL + '/ISAPI/ContentMgmt/search'
+    def __init__(self, ip_address, username, password) -> None:
+        self.url_trigger = 'http://' + ip_address + '/ISAPI/System/IO/outputs/1/trigger'
+        self.url_anpr_register = 'http://' + ip_address + ''
+        self.xxx = 'http://' + username + ':' + password + '@' + \
+            ip_address + '/ISAPI/Traffic/channels/1/vehicleDetect/plates'
+        self.url_anpr_get_cap = 'http://' + ip_address + \
+            '/ISAPI/Event/notification/httpHosts/capabilities'
+        self.url_anpr_get_plates = 'http://' + ip_address + \
+            '/ISAPI/Traffic/channels/1/vehicleDetect/plates'
+        self.url_anpr_get_picture = 'http://' + ip_address + '/ISAPI/ContentMgmt/search'
 
         self.username = username
         self.password = password
@@ -90,7 +93,8 @@ class Camera:
         return response
 
     def getAnprPlates(self):
-        response = requests.post(self.xxx, data=self.body_anpr_get_plates, auth=HTTPDigestAuth(self.username, self.password))
+        response = requests.post(self.url_anpr_get_plates, data=self.body_anpr_get_plates,
+                                 auth=HTTPDigestAuth(self.username, self.password))
 
         return response
 

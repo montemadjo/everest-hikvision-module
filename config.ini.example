@@ -1,5 +1,6 @@
 [Basic]
 Id = 1
+Interval = 120
 
 [Remote]
 SenderUrl = https://hexeverestfunctions.azurewebsites.net/api/PostStadionUhfCard
