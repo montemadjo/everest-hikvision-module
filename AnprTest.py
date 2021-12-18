@@ -63,8 +63,10 @@ if __name__ == '__main__':
 
     r = camera.getAnprPlates()
     xml = r.content.decode("utf-8")
+    o = xmltodict.parse(xml)
+    j = json.dumps(o)
 
-    # print(xml)
+    print(j)
 
     # svakih x sekundi treba da se iščitaju podaci sa kamere,
     # i da se aploaduju na cloud

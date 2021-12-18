@@ -14,3 +14,7 @@ Password = xxx
 Endpoint = tcp://localhost:5555
 Timeout = 2500
 Retries = 10
+
+[Iot]
+ConnectionString = HostName=maximus.azure-devices.net;DeviceId=BandiciDevice;SharedAccessKey=pg5F6VZI4deJwMFaqddsDSwiaGXt3IHcnVXBoGYR6to=
+Interval = 1
