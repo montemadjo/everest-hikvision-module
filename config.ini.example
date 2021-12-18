@@ -1,0 +1,15 @@
+[Basic]
+Id = 1
+
+[Remote]
+SenderUrl = https://hexeverestfunctions.azurewebsites.net/api/PostStadionUhfCard
+
+[Camera]
+Address = 192.168.1.152
+Username = xxx
+Password = xxx
+
+[Zmq]
+Endpoint = tcp://localhost:5555
+Timeout = 2500
+Retries = 10
