@@ -67,17 +67,24 @@ if __name__ == '__main__':
         r = camera.getAnprPlates()
         xml = r.content.decode("utf-8")
         o = xmltodict.parse(xml)
-        # j = json.dumps(o)
+        j = json.dumps(o)
+        d = json.loads(j)
 
         # slanje
+
         message = {
             "camera": {
                 "id": MY_ID,
                 "password": 41,
                 "command": "anpr read"
             },
-            "plates": o
+            "plates" : d
         }
+
+        print(message)
+
+        # message = o
+
         anprSender.postStadionUhfCards(message)
         print("data sent!")
 
