@@ -81,10 +81,6 @@ if __name__ == '__main__':
             "plates" : d
         }
 
-        print(message)
-
-        # message = o
-
         anprSender.postStadionUhfCards(message)
         print("data sent!")
 
