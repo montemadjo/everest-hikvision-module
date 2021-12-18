@@ -1,4 +1,4 @@
-from hikvision_camera import Camera
+from hikvision_camera import Camera, sender
 from hikvision_camera import Sender
 
 from datetime import datetime
@@ -40,8 +40,6 @@ SENDER_URL = config['Remote']['SenderUrl']
 
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
-plates = []
-
 
 def arrange(old_plates, new_plates):
     print(new_plates)
@@ -51,7 +49,7 @@ if __name__ == '__main__':
     camera = Camera(
         CAMERA_ADDRESS, CAMERA_USERNAME, CAMERA_PASSWORD)
 
-    uhfsender = Sender(
+    anprSender = Sender(
         SENDER_URL)
 
     r = camera.getAnprPlates()
@@ -62,7 +60,7 @@ if __name__ == '__main__':
     print(j)
 
     # svakih x sekundi treba da se iščitaju podaci sa kamere,
-    # da se poslože
+    # ne trebaju da se poslože
     # i da se aploaduju na cloud
     while True:
         time.sleep(INTERVAL)
@@ -72,5 +70,5 @@ if __name__ == '__main__':
         xml = r.content.decode("utf-8")
         o = xmltodict.parse(xml)
 
-        # slaganje
-        arrange(plates, o)
+        # slanje
+        anprSender.postStadionUhfCards(o)
