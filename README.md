@@ -2,6 +2,7 @@
 A module for interconnection with HikVision cameras
 
 ## Restart device
+```
 #!/bin/bash
 SERVICE=$1
 while [ true ]; do
@@ -15,3 +16,4 @@ else
 fi
 sleep 3
 done
+```
